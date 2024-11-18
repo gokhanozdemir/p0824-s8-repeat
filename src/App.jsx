@@ -1,12 +1,14 @@
+import Profile from "./components/Profile"
 
-const initialArray = ["Didem", "Neslinur", "Gökcen", "Şeyda"]
+const initialArray = ["Didem", "Neslinur", "Gökcen", "Şeyda", "Onur"]
 
 function App() {
 
   return (
     <div>
       selamlar
-      {initialArray.map((item, index) => <p key={index}>{item}</p>)}
+      {initialArray.map((item, index) =>
+        <Profile key={index} name={item} />)}
     </div>
   )
 }
