@@ -2,7 +2,11 @@ import { useState, useEffect } from "react"
 import Profile from "./components/Profile"
 import axios from "axios";
 import AddProfile from "./components/AddProfile";
-
+import {
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -14,16 +18,6 @@ function App() {
     "id": Date.now()
   };
 
-  /* TASK
-  
-    AddProfile componentine iki adet prop verin. 
-    - örnek kullanıcı datası
-    - Add Profile omponente tıklandığında kullanıcıyı 'user' stateine ekleyecek bir method.
-    
-  
-    NOT: Her hangi bir aşamada hata aldığınızda görmek için console panelini hep açık tutun.
-  
-  */
 
   const handleAddUser = (userData) => {
     console.log('userAdding', userData);
@@ -53,11 +47,22 @@ function App() {
   }, [])
 
   return (
+
     <div>
-      selamlar
-      {users.map((item, index) =>
-        <Profile key={index} info={item} />)}
-      <AddProfile addUser={handleAddUser} demoUser={sampleUser} />
+      <Switch>
+
+        <Route path="/who-is-watching">
+          {users.map((item, index) =>
+            <Profile key={index} info={item} />)}
+          <AddProfile addUser={handleAddUser} demoUser={sampleUser} />
+        </Route>
+
+        <Route path="/">
+          <div>Hayali Login Formu</div>
+          <button className="primary-button">Login</button>
+        </Route>
+
+      </Switch>
     </div>
   )
 }
