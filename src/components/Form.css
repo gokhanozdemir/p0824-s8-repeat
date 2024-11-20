@@ -1,0 +1,62 @@
+/* Input group */
+
+/* Input group */
+.input-group {
+  position: relative;
+  display: flex;
+}
+
+.input-group input::placeholder {
+  color: transparent;
+}
+
+/* Label styles */
+/* .input-group:not(:has(input[type='checkbox'])) label { */
+.input-group:has(input[type="text"]) label,
+.input-group:has(input[type="email"]) label,
+.input-group:has(input[type="password"]) label {
+  position: absolute;
+  top: var(--gap-m);
+  left: var(--gap-s);
+
+  color: var(--text-light-gray);
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+  pointer-events: none; /* Prevent label from capturing clicks */
+}
+
+/* Input fields */
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="password"] {
+  flex-grow: 1;
+  padding: var(--gap-m) var(--gap-s);
+  border: 1px solid var(--bg-gray);
+  border-radius: calc(var(--border-radius) / 2);
+  background-color: var(--bg-gray);
+  color: var(--text-lightest);
+  transition: border-color 0.3s ease-in-out; /* Smooth transition for focus effect */
+}
+/* Move label up when input is focused or filled */
+.input-group:has([type="text"]:focus) label,
+.input-group:has([type="email"]:focus) label,
+.input-group:has([type="password"]:focus) label,
+.input-group:has(input:valid):not(:has(input:placeholder-shown)):not(
+    :has(input[type="checkbox"])
+  )
+  label {
+  top: calc(var(--gap-s) / 2); /* Move label up */
+  left: var(--gap-s); /* Keep label aligned */
+  font-size: 0.7rem; /* Smaller font size */
+}
+
+/* Focus effect for input fields */
+.input-group input[type="text"]:focus,
+.input-group input[type="email"]:focus,
+.input-group input[type="password"]:focus,
+.input-group input[type="checkbox"]:focus {
+  outline: 2px solid var(--text-lightest); /* Focus ring color */
+  outline-offset: 2px; /* Space between the outline and the input */
+  box-shadow: 0 0 5px rgba(229, 9, 20, 0.5); /* Optional shadow effect */
+}
+
+/* Error state border-color: var(--primary-red); /* Change border color on focus */
