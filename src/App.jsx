@@ -1,67 +1,59 @@
 import { useState, useEffect } from "react"
-import Profile from "./components/Profile"
-import axios from "axios";
-import AddProfile from "./components/AddProfile";
+import Profiles from "./components/Profiles"
+import Login from "./components/Login";
 import {
   Switch,
   Route,
   Link
 } from "react-router-dom";
-
 function App() {
-  const [users, setUsers] = useState([]);
+  /*
+    TASK
+    1. useHistory dökümantasyonundaki (https://v5.reactrouter.com/web/api/Hooks/usehistory) gibi 
+      - gereksinimleri import et.
+      - hook'u çalıştır ve bir history instance oluştur.
+      - handleLogin fonksiyonunu "/who-is-watching" sayfasına yönlenecek şekilde güncelle.
+    
+    2. Profile.jsx componentinde ismin yazıldığı span'ı Link ile değiştir. 
+  
+    2. Navigasyondan "Kim İzliyor'u" kaldır. Profiller sadece Login sonrası görüntülenmeli.
+  
+    3. Seçilen profilin bilgilerinin görüntülenmesi.
+      - useParams dökümantasyondaki (https://v5.reactrouter.com/web/api/Hooks/useparams) gibi gerejsinimleri import et. 
+      - App.jsx içine dökümantasyondaki "BlogPost" componentini, kopyala ve "ProfileDetail" adıyla güncelle.
+       - "ProfileDetail" içinde hook'u çalıştır ve "profileID" isimli bir parametreyi okuyacak şekilde hazırlık yap. 
+    
+    4. App.jsx'e yeni bir Route ekle. 
+     - path'i "/profile" sonunda "profileID" yakalayacak şekilde, en alta ekle.
+     - İlgili rota eşleşirse, ProfileDetail componenti render edilmeli.
+  
+    5. Router test edin.
+  
+  */
 
-  const sampleUser = {
-    "createdAt": "2024-10-17T07:00:18.480Z",
-    "name": "Didem Şeyda",
-    "avatarUrl": "https://api.multiavatar.com/90023.svg",
-    "id": Date.now()
-  };
 
 
-  const handleAddUser = (userData) => {
-    console.log('userAdding', userData);
-    // yeni array oluşturup
-    // !!!!! push asla kullanmıyoruz
-    setUsers([...users, userData]);
-    // spread ile yeniarr içine kopyalıyoruz.
-    // en son sety yeni arrayi setUser ile state'e atıyoruz
-  };
-
-  useEffect(() => {
-    console.log("componentDidMount")
-    axios.get('https://6710ce3ba85f4164ef2f5ff8.mockapi.io/api/profiles')
-      .then(function (response) {
-        // handle success
-        console.log(response);
-        setUsers(response.data)
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .finally(function () {
-        // always executed
-      });
-
-  }, [])
 
   return (
 
     <div>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Anasayfa</Link>
+          </li>
+          <li>
+            <Link to="/who-is-watching">Kim izliyor?</Link>
+          </li>
+        </ul>
+      </nav>
       <Switch>
-
         <Route path="/who-is-watching">
-          {users.map((item, index) =>
-            <Profile key={index} info={item} />)}
-          <AddProfile addUser={handleAddUser} demoUser={sampleUser} />
+          <Profiles />
         </Route>
-
         <Route path="/">
-          <div>Hayali Login Formu</div>
-          <button className="primary-button">Login</button>
+          <Login />
         </Route>
-
       </Switch>
     </div>
   )
