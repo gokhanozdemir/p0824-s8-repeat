@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react"
 import Profile from "./components/Profile"
 import axios from "axios";
-
-const initialArray = ["Didem", "Neslinur", "Gökcen", "Şeyda", "Onur"]
-
+import AddProfile from "./components/AddProfile";
 
 
 function App() {
@@ -32,6 +30,7 @@ function App() {
       selamlar
       {users.map((item, index) =>
         <Profile key={index} info={item} />)}
+      <AddProfile />
     </div>
   )
 }
