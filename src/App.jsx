@@ -6,6 +6,7 @@ import {
   Route,
   Link, NavLink
 } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
 function App() {
   /*
     TASK
@@ -35,34 +36,21 @@ function App() {
 
 
   return (
-    <div>
 
-      <div>
-        <header className="container">
-          <Link className="logo-container" to="/">
-            <img src="./Netflix_2015_logo.svg" alt="netflixlogo" />
-          </Link>
 
-          <nav>
-            <ul>
-              <li>
-                <Link to="/who-is-watching">Kim izliyor?</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <Switch>
-          <Route path="/who-is-watching">
-            <Profiles />
-          </Route>
+    <Switch>
+      <Route path="/who-is-watching">
+        <Profiles />
+      </Route>
 
-          <Route path="/" >
-            <Login />
+      <Route path="/" >
+        {/* FIXME: sayfa kenarında üstte bir boşluk kaldı */}
+        <LoginPage />
 
-          </Route>
-        </Switch>
-      </div>
-    </div>
+      </Route>
+    </Switch>
+
+
   )
 }
 

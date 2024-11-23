@@ -45,6 +45,7 @@ function Login() {
 		handleLogin(loginData);
 	}
 
+
 	const handleChange = (e) => {
 		const { type, name, value, checked } = e.target;
 		console.log("type", type, "name", name, "value", value, "checked", checked);
@@ -57,7 +58,7 @@ function Login() {
 
 	return (
 		<div className="container-small">
-			<div className="login-page-container">
+			<div className="login-form-container">
 				<h1>Sign In</h1>
 				<form onSubmit={handleSubmit} className="flex column gap-s">
 					<div className="input-group">
