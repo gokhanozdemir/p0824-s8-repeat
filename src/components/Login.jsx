@@ -56,30 +56,31 @@ function Login() {
 	}
 
 	return (
-		<>
-			<h1>Sign In</h1>
-			<form onSubmit={handleSubmit} className="flex column gap-s">
-				<div className="input-group">
-					<label htmlFor="emailormobile">Email or mobile number</label>
-					<input onChange={handleChange} name="userInfo" value={formData.userInfo} type="text" id="emailormobile" placeholder="your user info" />
-				</div>
-				<div className="input-group">
-					<label htmlFor="pass">Password</label>
-					<input onChange={handleChange} name="passField" value={formData.passField} type="password" id="pass" placeholder="your password" />
-				</div>
-				<div className="input-group flex gap-s">
-					<input onChange={handleChange} name="rememberMe" checked={formData.rememberMe} type="checkbox" id="remember" />
-					<label htmlFor="remember"> Remember me</label>
-				</div>
-				<button disabled={!isFormValid} className="primary-button" type="submit">Login</button>
-				<button className="secondary-button" type="button">Use a Sign-In Code</button>
-				<Link to="/reset-password">Forgot Password?</Link>
-				<div>
-					New to Witflix? <Link to="/register">Sign up now</Link>
-				</div>
-			</form>
-
-		</>
+		<div className="container-small">
+			<div className="login-page-container">
+				<h1>Sign In</h1>
+				<form onSubmit={handleSubmit} className="flex column gap-s">
+					<div className="input-group">
+						<label htmlFor="emailormobile">Email or mobile number</label>
+						<input onChange={handleChange} name="userInfo" value={formData.userInfo} type="text" id="emailormobile" placeholder="your user info" />
+					</div>
+					<div className="input-group">
+						<label htmlFor="pass">Password</label>
+						<input onChange={handleChange} name="passField" value={formData.passField} type="password" id="pass" placeholder="your password" />
+					</div>
+					<div className="input-group flex gap-s">
+						<input onChange={handleChange} name="rememberMe" checked={formData.rememberMe} type="checkbox" id="remember" />
+						<label htmlFor="remember"> Remember me</label>
+					</div>
+					<button disabled={!isFormValid} className="primary-button" type="submit">Login</button>
+					<button className="secondary-button" type="button">Use a Sign-In Code</button>
+					<Link to="/reset-password">Forgot Password?</Link>
+					<div>
+						New to Witflix? <Link to="/register">Sign up now</Link>
+					</div>
+				</form>
+			</div>
+		</div>
 	)
 }
 

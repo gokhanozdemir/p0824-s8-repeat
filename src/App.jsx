@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import {
   Switch,
   Route,
-  Link
+  Link, NavLink
 } from "react-router-dom";
 function App() {
   /*
@@ -35,26 +35,33 @@ function App() {
 
 
   return (
-
     <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Anasayfa</Link>
-          </li>
-          <li>
-            <Link to="/who-is-watching">Kim izliyor?</Link>
-          </li>
-        </ul>
-      </nav>
-      <Switch>
-        <Route path="/who-is-watching">
-          <Profiles />
-        </Route>
-        <Route path="/">
-          <Login />
-        </Route>
-      </Switch>
+
+      <div>
+        <header className="container">
+          <Link className="logo-container" to="/">
+            <img src="./Netflix_2015_logo.svg" alt="netflixlogo" />
+          </Link>
+
+          <nav>
+            <ul>
+              <li>
+                <Link to="/who-is-watching">Kim izliyor?</Link>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        <Switch>
+          <Route path="/who-is-watching">
+            <Profiles />
+          </Route>
+
+          <Route path="/" >
+            <Login />
+
+          </Route>
+        </Switch>
+      </div>
     </div>
   )
 }

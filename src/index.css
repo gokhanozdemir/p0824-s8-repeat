@@ -59,6 +59,7 @@ https://stackblitz.com/edit/vitejs-vite-fyjpem?file=src%2FApp.jsx,src%2Findex.cs
 
 body {
   background-color: var(--primary-black);
+
   color: var(--text-lightest);
 }
 
@@ -100,6 +101,17 @@ a:hover {
   color: var(--text-lightest);
   text-decoration: underline;
 }
+
+.container,
+.container-small {
+  margin: var(--gap-m);
+}
+
+.logo-container {
+  display: inline-block;
+  width: 6rem;
+}
+
 /* -------
    DESIGN SYSTEM
    -------
@@ -317,6 +329,10 @@ button.large {
   justify-content: space-between;
 }
 
+.rounded {
+  border-radius: var(--border-radius);
+}
+
 .gap-s {
   gap: var(--gap-s);
 }
@@ -338,3 +354,31 @@ button.large {
    
    END
    ------------*/
+
+/*---
+   mobile first
+   Desktop overwrites
+   RESPONSIVE STARTS
+   
+   -starts
+   */
+
+/* Masaüstü ekranlar için stiller */
+@media (min-width: 600px) {
+  .login-page-container {
+    padding: var(--gap-l);
+  }
+
+  .container-small {
+    margin: 0 auto;
+    max-width: 30rem;
+  }
+}
+
+/*---
+   mobile first
+   Desktop overwrites
+   RESPONSIVE STARTS
+   
+   -ends
+   */
