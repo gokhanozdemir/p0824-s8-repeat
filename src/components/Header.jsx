@@ -12,6 +12,7 @@ function Header() {
 					<li>
 						<Link to="/who-is-watching">Kim izliyor?</Link>
 					</li>
+
 				</ul>
 			</nav>
 		</header>
