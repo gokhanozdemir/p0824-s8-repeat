@@ -26,6 +26,9 @@ TODO: tek bir fn ile bütün alanları kontrol et
 	// https://dev.to/andyrewlee/cheat-sheet-for-updating-objects-and-arrays-in-react-state-48np
 
 */
+const handleChange = (event) => {
+	console.log(event)
+}
 function Register() {
 	const [formData, setFormData] = useState(initialForm)
 	return (
@@ -34,26 +37,26 @@ function Register() {
 			<form>
 				<div className="input-group">
 					<label htmlFor="nameSurname">İsim Soyisim</label>
-					<input id="nameSurname" placeholder="İsim Soyisim" type="text" value={formData.isimSoyisim} />
+					<input name="isimSoyisim"
+						onChange={handleChange} id="nameSurname" placeholder="İsim Soyisim" type="text" value={formData.isimSoyisim} />
 				</div>
 				<div className="input-group">
 					<label htmlFor="creditnumber">Kart Numarası</label>
-					<input id="creditnumber" placeholder="Kart Numarası" type="text" value={formData.kartNumarasi} />
+					<input name="kartNumarasi" onChange={handleChange} id="creditnumber" placeholder="Kart Numarası" type="text" value={formData.kartNumarasi} />
 				</div>
 				<div className="input-group">
 					<label htmlFor="exp_year">Son Kullanma Yıl</label>
-					<select id="exp_year" defaultValue="-1" value={formData.sonYil}>
+					<select name="sonYil" onChange={handleChange} id="exp_year" defaultValue="-1" value={formData.sonYil}>
 						<option value="-1" disabled>Yılı Seçiniz</option>
 						{years.map((y) => {
 							return <option key={y} value={y}>{y}</option>
 						})}
-
 					</select>
 
 				</div>
 				<div className="input-group">
 					<label htmlFor="exp_mounth">Son Kullanma Ay</label>
-					<select id="exp_mounth" defaultValue="-1" value={formData.sonAy}>
+					<select name="sonAy" onChange={handleChange} id="exp_mounth" defaultValue="-1" value={formData.sonAy}>
 						<option value="-1" disabled >Ayı Seçiniz</option>
 						{months.map((m) => {
 							return <option key={m} value={m}>{m}</option>
@@ -63,24 +66,24 @@ function Register() {
 				<div className="input-group flex column">
 					<p>Taksit Sayısı</p>
 					<div>
-						<input id="paymentSinglle" checked={formData.odemeTipi.includes("single")} type="radio" name="odemeTipi" value="single" />
+						<input type="radio" name="odemeTipi" id="paymentSinglle" onChange={handleChange} checked={formData.odemeTipi.includes("single")} value="single" />
 						<label htmlFor="paymentSinglle">Peşin</label>
 					</div>
 					<div>
-						<input type="radio" id="paymentInstallments" checked={formData.odemeTipi.includes("installment")} name="odemeTipi" value="installment" />
+						<input type="radio" name="odemeTipi" onChange={handleChange} id="paymentInstallments" checked={formData.odemeTipi.includes("installment")} value="installment" />
 						<label htmlFor="paymentInstallments">3 Taksit</label>
 					</div>
 				</div>
 				<div className="input-group flex column">
 					<div>
-						<input id="kullanim" type="checkbox" checked={formData.onaylar.includes("usage")} name="condions_usage" value="usage" />
+						<input id="kullanim" type="checkbox" checked={formData.onaylar.includes("usage")} name="condions_usage" onChange={handleChange} value="usage" />
 						<label htmlFor="kullanim">Verilerin kullanımı kabul ediyorum</label></div>
 					<div>
-						<input type="checkbox" checked={formData.onaylar.includes("rights")} id="satis" name="condions_rights" value="rights" />
+						<input type="checkbox" checked={formData.onaylar.includes("rights")} id="satis" name="condions_rights" onChange={handleChange} value="rights" />
 						<label htmlFor="satis">Şatış yükümlülüklerini kabul ediyorum</label>
 					</div>
 					<div>
-						<input type="checkbox" checked={formData.onaylar.includes("marketing")} id="pazarlama" name="condions_rights" value="marketing" />
+						<input type="checkbox" checked={formData.onaylar.includes("marketing")} id="pazarlama" name="condions_rights" onChange={handleChange} value="marketing" />
 						<label htmlFor="pazarlama">Pazarlama hükümlerini kabul ediyorum</label>
 					</div>
 				</div>
