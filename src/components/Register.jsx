@@ -8,29 +8,34 @@ const initialForm = {
 	sonYil: "2026",
 	sonAy: "Şubat",
 	odemeTipi: "installment",
-	onaylar: ["usage", "rights"]
+	// birden fazla eş zamanlı seçim yaptırmak için
+	onaylar: ["marketing"],
+	kvkk: true
 }
 
-/* 
-TODO: bütün alanlara formData ile uyumlu name değerleri ekle.
-TODO: bir eventHandler (onChange) yazıp, bütün alanlara bağlanacak
-TODO: bir text, select ve checkbox alanları için gereken ifadelere göre doğru veriyi okuyarak, State'te sadece ilgili kısmı güncelle
-TODO: tek bir fn ile bütün alanları kontrol et
 
- - text--> data nerede? value'da, state'teki karşılığı nerede? [name] 
- - select--> data nerede? value'da, state'teki karşılığı nerede? [name] 
- - radio--> data nerede? value'da, state'teki karşılığı nerede? [name] 
- - radio--> data nerede? (checked'de ve) value'da, state'teki karşılığı nerede? "onaylar" 
-	eğer(onaylar'da ilgili value yoksa) o zaman onaylar'a ilgil value eklenecek
-	varsa - filter ile çıkarılacak
-	// https://dev.to/andyrewlee/cheat-sheet-for-updating-objects-and-arrays-in-react-state-48np
-
-*/
-const handleChange = (event) => {
-	console.log(event)
-}
 function Register() {
-	const [formData, setFormData] = useState(initialForm)
+	const [formData, setFormData] = useState(initialForm);
+	const handleChange = (event) => {
+		// console.log("Event", event);
+		const { name, value, checked, type } = event.target;
+
+		if (name === "approvals") {
+			const updatedOnaylar = checked === true
+				? [...formData.onaylar, value]
+				// Checkbox işaretlenmişse ekle
+				: formData.onaylar.filter((item) => item !== value); // İşaret kaldırılmışsa çıkar
+			setFormData({ ...formData, onaylar: updatedOnaylar });
+
+		} else {
+			const newFormData = {
+				...formData, [name]: type === "checkbox" ? checked : value
+			}
+			setFormData(newFormData)
+		}
+
+
+	}
 	return (
 		<div>
 			<h1>Register</h1>
@@ -66,28 +71,36 @@ function Register() {
 				<div className="input-group flex column">
 					<p>Taksit Sayısı</p>
 					<div>
-						<input type="radio" name="odemeTipi" id="paymentSinglle" onChange={handleChange} checked={formData.odemeTipi.includes("single")} value="single" />
+						<input type="radio" name="odemeTipi" id="paymentSinglle" onChange={handleChange} checked={formData.odemeTipi === ("single")} value="single" />
 						<label htmlFor="paymentSinglle">Peşin</label>
 					</div>
 					<div>
-						<input type="radio" name="odemeTipi" onChange={handleChange} id="paymentInstallments" checked={formData.odemeTipi.includes("installment")} value="installment" />
+						<input type="radio" name="odemeTipi" onChange={handleChange} id="paymentInstallments" checked={formData.odemeTipi === ("installment")} value="installment" />
 						<label htmlFor="paymentInstallments">3 Taksit</label>
 					</div>
 				</div>
 				<div className="input-group flex column">
+					<h3>İsteğe Bağlı Onaylar</h3>
 					<div>
-						<input id="kullanim" type="checkbox" checked={formData.onaylar.includes("usage")} name="condions_usage" onChange={handleChange} value="usage" />
-						<label htmlFor="kullanim">Verilerin kullanımı kabul ediyorum</label></div>
-					<div>
-						<input type="checkbox" checked={formData.onaylar.includes("rights")} id="satis" name="condions_rights" onChange={handleChange} value="rights" />
+						<input type="checkbox" checked={formData.onaylar.includes("rights")} id="satis" name="approvals" onChange={handleChange} value="rights" />
 						<label htmlFor="satis">Şatış yükümlülüklerini kabul ediyorum</label>
 					</div>
 					<div>
-						<input type="checkbox" checked={formData.onaylar.includes("marketing")} id="pazarlama" name="condions_rights" onChange={handleChange} value="marketing" />
+						<input type="checkbox" checked={formData.onaylar.includes("marketing")} id="pazarlama" name="approvals" onChange={handleChange} value="marketing" />
 						<label htmlFor="pazarlama">Pazarlama hükümlerini kabul ediyorum</label>
 					</div>
+					<div>
+						<input type="checkbox" checked={formData.onaylar.includes("stats")} id="istatistik" name="approvals" onChange={handleChange} value="stats" />
+						<label htmlFor="istatistik">İstatisiki kullanım hükümlerini kabul ediyorum</label>
+					</div>
 				</div>
-				<button className="primary-button" type="submit">Login</button>
+				<div>
+					<h3>KVKK Hükümlerini Okudum Onaylıyorum</h3>
+					<div>
+						<input id="kullanim" type="checkbox" checked={formData.kvkk} name="kvkk" onChange={handleChange} />
+						<label htmlFor="kullanim">Verilerin kullanımı kabul ediyorum</label></div>
+				</div>
+				<button disabled={!formData.kvkk} className="primary-button" type="submit">Login</button>
 			</form>
 		</div>
 	)
