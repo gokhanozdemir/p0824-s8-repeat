@@ -63,7 +63,7 @@ function Login() {
 				<form onSubmit={handleSubmit} className="flex column gap-s">
 					<div className="input-group">
 						<label htmlFor="emailormobile">Email or mobile number</label>
-						<input onChange={handleChange} name="userInfo" value={formData.userInfo} type="text" id="emailormobile" placeholder="your user info" />
+						<input id="emailormobile" onChange={handleChange} name="userInfo" value={formData.userInfo} type="text" placeholder="your user info" />
 					</div>
 					<div className="input-group">
 						<label htmlFor="pass">Password</label>
@@ -73,8 +73,8 @@ function Login() {
 						<input onChange={handleChange} name="rememberMe" checked={formData.rememberMe} type="checkbox" id="remember" />
 						<label htmlFor="remember"> Remember me</label>
 					</div>
-					<button disabled={!isFormValid} className="primary-button" type="submit">Login</button>
-					<button className="secondary-button" type="button">Use a Sign-In Code</button>
+					<button type="submit" disabled={!isFormValid} className="primary-button" >Login</button>
+					<button type="button" className="secondary-button" >Use a Sign-In Code</button>
 					<Link to="/reset-password">Forgot Password?</Link>
 					<div>
 						New to Witflix? <Link to="/register">Sign up now</Link>

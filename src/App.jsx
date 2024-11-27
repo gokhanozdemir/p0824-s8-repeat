@@ -5,9 +5,15 @@ import Register from "./components/Register";
 import {
   Switch,
   Route,
-  Link, NavLink
+  Link, NavLink, useParams
 } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
+
+function UserProfile() {
+  let { userId } = useParams();
+  return <div>Now showing post {userId}</div>;
+}
+
 function App() {
 
   return (
@@ -16,10 +22,16 @@ function App() {
       <Route path="/who-is-watching">
         <Profiles />
       </Route>
+
       <Route path="/register">
         <Register />
       </Route>
-      <Route path="/" >
+      {/* https://github.com/orgs/:OrganizationUserName/repositories */}
+      <Route path="/user/:userId">
+        <UserProfile />
+      </Route>
+
+      <Route>
         {/* FIXME: sayfa kenarında üstte bir boşluk kaldı */}
         <LoginPage />
       </Route>
