@@ -361,6 +361,10 @@ button.large {
   text-align: center;
 }
 
+.error-message {
+  color: var(--primary-color);
+}
+
 /*-----------------
    - UTILITY CLASSES 
    

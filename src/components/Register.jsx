@@ -16,7 +16,12 @@ const initialForm = {
 
 function Register() {
 	const [formData, setFormData] = useState(initialForm);
+	// TASK: "errors" state'i eklenecek ilk değeri boş bir obj
+	const [errors, setErrors] = useState({})
 	const [isValid, setValid] = useState(false);
+
+
+
 	const handleChange = (event) => {
 		// console.log("Event", event);
 		const { name, value, checked, type } = event.target;
@@ -27,6 +32,7 @@ function Register() {
 				? [...formData.onaylar, value]
 				// Checkbox işaretlenmişse ekle
 				: formData.onaylar.filter((item) => item !== value); // İşaret kaldırılmışsa çıkar
+
 			setFormData({ ...formData, onaylar: updatedOnaylar });
 
 		} else {
@@ -36,7 +42,27 @@ function Register() {
 			setFormData(newFormData)
 		}
 
+
+		const newErrors = { ...errors };
+
+		if (name === "isimSoyisim") {
+			newErrors[name] = value.length < 3 ? "İsim Soyisim en az 3 karakter olmalı" : "";
+		} else if (name === "kartNumarasi") {
+			newErrors.kartNumarasi = value.length !== 16 ? "Kart numarası 16 haneli olmalı" : "";
+		} else if (name === "sonYil") {
+			newErrors.sonYil = value === "" ? "Yıl seçmelisiniz" : "";
+		} else if (name === "sonAy") {
+			newErrors.sonAy = value === "" ? "Ay seçmelisiniz" : "";
+		} else if (name === "odemeTipi") {
+			newErrors.odemeTipi = value === "" ? "Odeme tipi secmelisiniz" : "";
+		} else if (name === "kvkk") {
+			newErrors.kvkk = checked === false ? "KVKK onaylamalısınız" : "";
+		}
+
+		setErrors(newErrors)
+
 	}
+
 
 	// 
 	useEffect(() => {
@@ -62,29 +88,45 @@ function Register() {
 					<input name="isimSoyisim"
 						onChange={handleChange} id="nameSurname" placeholder="İsim Soyisim" type="text" value={formData.isimSoyisim} />
 				</div>
+
+				{errors.isimSoyisim && (
+					<p className="error-message">hata {errors.isimSoyisim}</p>
+				)}
+
 				<div className="input-group">
 					<label htmlFor="creditnumber">Kart Numarası</label>
 					<input name="kartNumarasi" onChange={handleChange} id="creditnumber" placeholder="Kart Numarası" type="text" value={formData.kartNumarasi} />
 				</div>
+
+				{errors.kartNumarasi && (
+					<p className="error-message">hata {errors.kartNumarasi}</p>
+				)}
+
+
 				<div className="input-group">
 					<label htmlFor="exp_year">Son Kullanma Yıl</label>
-					<select name="sonYil" onChange={handleChange} id="exp_year" defaultValue="-1" value={formData.sonYil}>
+					<select name="sonYil" onChange={handleChange} id="exp_year" defaultValue="" value={formData.sonYil}>
 						<option value="" disabled>Yılı Seçiniz</option>
 						{years.map((y) => {
 							return <option key={y} value={y}>{y}</option>
 						})}
 					</select>
-
 				</div>
+				{errors.sonYıl && (
+					<p className="error-message">hata {errors.sonYıl}</p>
+				)}
 				<div className="input-group">
 					<label htmlFor="exp_mounth">Son Kullanma Ay</label>
-					<select name="sonAy" onChange={handleChange} id="exp_mounth" defaultValue="-1" value={formData.sonAy}>
+					<select name="sonAy" onChange={handleChange} id="exp_mounth" defaultValue="" value={formData.sonAy}>
 						<option value="" disabled >Ayı Seçiniz</option>
 						{months.map((m) => {
 							return <option key={m} value={m}>{m}</option>
 						})}
 					</select>
 				</div>
+				{errors.sonAy && (
+					<p className="error-message">hata {errors.sonAy}</p>
+				)}
 				<div className="input-group flex column">
 					<p>Taksit Sayısı</p>
 					<div>
@@ -96,7 +138,11 @@ function Register() {
 						<label htmlFor="paymentInstallments">3 Taksit</label>
 					</div>
 				</div>
+				{errors.odemeTipi && (
+					<p className="error-message">hata {errors.odemeTipi}</p>
+				)}
 				<div className="input-group flex column">
+
 					<h3>İsteğe Bağlı Onaylar</h3>
 					<div>
 						<input type="checkbox" checked={formData.onaylar.includes("rights")} id="satis" name="approvals" onChange={handleChange} value="rights" />
@@ -111,12 +157,14 @@ function Register() {
 						<label htmlFor="istatistik">İstatisiki kullanım hükümlerini kabul ediyorum</label>
 					</div>
 				</div>
-				<div>
+				<div className="input-group flex column">
 					<h3>KVKK Hükümlerini Okudum Onaylıyorum</h3>
 					<div>
 						<input id="kullanim" type="checkbox" checked={formData.kvkk} name="kvkk" onChange={handleChange} />
 						<label htmlFor="kullanim">Verilerin kullanımı kabul ediyorum</label></div>
 				</div>
+				{errors.kvkk && (
+					<p className="error-message">hata {errors.kvkk}</p>)}
 				<button disabled={!isValid} className="primary-button" type="submit">Login</button>
 			</form>
 		</div>
