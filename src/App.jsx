@@ -26,7 +26,7 @@ function App() {
       <Route path="/register">
         <Register />
       </Route>
-      {/* https://github.com/orgs/:OrganizationUserName/repositories */}
+
       <Route path="/user/:userId">
         <UserProfile />
       </Route>

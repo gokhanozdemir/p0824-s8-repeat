@@ -1,25 +1,27 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const years = ["2024", "2025", "2026", "2027", "2028", "2029", "2030"]
 const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
 const initialForm = {
-	isimSoyisim: "gökhan",
-	kartNumarasi: "123456123456123456",
-	sonYil: "2026",
-	sonAy: "Şubat",
-	odemeTipi: "installment",
-	// birden fazla eş zamanlı seçim yaptırmak için
-	onaylar: ["marketing"],
-	kvkk: true
+	isimSoyisim: "",
+	kartNumarasi: "",
+	sonYil: "",
+	sonAy: "",
+	odemeTipi: null,
+	onaylar: [], // birden fazla eş zamanlı seçim yaptırmak için
+	kvkk: false
 }
+
 
 
 function Register() {
 	const [formData, setFormData] = useState(initialForm);
+	const [isValid, setValid] = useState(false);
 	const handleChange = (event) => {
 		// console.log("Event", event);
 		const { name, value, checked, type } = event.target;
 
+		// alan tipine göre formData statini günceller
 		if (name === "approvals") {
 			const updatedOnaylar = checked === true
 				? [...formData.onaylar, value]
@@ -34,8 +36,23 @@ function Register() {
 			setFormData(newFormData)
 		}
 
-
 	}
+
+	// 
+	useEffect(() => {
+		if (formData.isimSoyisim.length < 3
+			|| formData.kartNumarasi.length !== 16
+			|| formData.sonYil === ""
+			|| formData.sonAy === ""
+			|| formData.odemeTipi === ""
+			|| formData.kvkk === false
+		) {
+			setValid(false)
+		} else {
+			setValid(true)
+		}
+	}, [formData])
+
 	return (
 		<div>
 			<h1>Register</h1>
@@ -52,7 +69,7 @@ function Register() {
 				<div className="input-group">
 					<label htmlFor="exp_year">Son Kullanma Yıl</label>
 					<select name="sonYil" onChange={handleChange} id="exp_year" defaultValue="-1" value={formData.sonYil}>
-						<option value="-1" disabled>Yılı Seçiniz</option>
+						<option value="" disabled>Yılı Seçiniz</option>
 						{years.map((y) => {
 							return <option key={y} value={y}>{y}</option>
 						})}
@@ -62,7 +79,7 @@ function Register() {
 				<div className="input-group">
 					<label htmlFor="exp_mounth">Son Kullanma Ay</label>
 					<select name="sonAy" onChange={handleChange} id="exp_mounth" defaultValue="-1" value={formData.sonAy}>
-						<option value="-1" disabled >Ayı Seçiniz</option>
+						<option value="" disabled >Ayı Seçiniz</option>
 						{months.map((m) => {
 							return <option key={m} value={m}>{m}</option>
 						})}
@@ -100,7 +117,7 @@ function Register() {
 						<input id="kullanim" type="checkbox" checked={formData.kvkk} name="kvkk" onChange={handleChange} />
 						<label htmlFor="kullanim">Verilerin kullanımı kabul ediyorum</label></div>
 				</div>
-				<button disabled={!formData.kvkk} className="primary-button" type="submit">Login</button>
+				<button disabled={!isValid} className="primary-button" type="submit">Login</button>
 			</form>
 		</div>
 	)
